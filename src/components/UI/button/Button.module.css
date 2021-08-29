@@ -1,0 +1,19 @@
+.btn {
+  padding: 5px 15px;
+  color: teal;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid teal;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  border: 1px solid gray;
+  color: gray;
+}
+
+.btn:not(:disabled):hover {
+  color: white;
+  background-color: teal;
+}
+
