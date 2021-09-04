@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useMemo, useState } from 'react';
 
 import PostForm from './components/PostForm';
 import PostList from './components/PostList';
@@ -8,6 +8,7 @@ import './styles/App.css';
 import css from './App.module.css';
 import Select from './components/UI/select/Select';
 import { Option } from './models/types';
+import Input from './components/UI/input/Input';
 
 const sortOptions: Option[] = [
   { value: 'title', name: 'По названию' },
@@ -21,6 +22,24 @@ const App = () => {
     { id: 3, title: 'eee', body: 'zzz' },
   ]);
   const [selectedSort, setSelectedSort] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const sortedPost = useMemo(() => {
+    console.log('sorted posts');
+    return selectedSort
+      ? [...posts].sort((a, b) =>
+          a[selectedSort as keyof Omit<Post, 'id'>].localeCompare(
+            b[selectedSort as keyof Omit<Post, 'id'>]
+          )
+        )
+      : posts;
+  }, [selectedSort, posts]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPost.filter(post =>
+      post.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, sortedPost]);
 
   const createPostHandler = (newPost: Post) => {
     setPosts([...posts, newPost]);
@@ -32,8 +51,10 @@ const App = () => {
 
   const sortPost = (sort: string) => {
     setSelectedSort(sort);
-    const sorted = [...posts].sort((a, b) => a[sort as keyof Omit<Post, 'id'>].localeCompare(b[sort as keyof Omit<Post, 'id'>]));
-    setPosts(sorted);
+  };
+
+  const onSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -41,6 +62,11 @@ const App = () => {
       <PostForm onCreatePost={createPostHandler} />
 
       <div className={css.selectContainer}>
+        <Input
+          value={searchQuery}
+          onChange={onSearchHandler}
+          placeholder="Поиск"
+        />
         <Select
           value={selectedSort}
           onChange={sortPost}
@@ -49,8 +75,12 @@ const App = () => {
         />
       </div>
 
-      {posts.length ? (
-        <PostList posts={posts} title="Посты про JS" removePost={removePost} />
+      {sortedAndSearchedPosts.length ? (
+        <PostList
+          posts={sortedAndSearchedPosts}
+          title="Посты про JS"
+          removePost={removePost}
+        />
       ) : (
         <h2 className={css.subtitle}>Посты не найдены</h2>
       )}
