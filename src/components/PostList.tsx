@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { PostItem } from './PostItem';
 import { Post } from '../models/Post';
@@ -20,16 +21,19 @@ export const PostList = ({ posts, title, removePost }: PostListProps) => {
     <>
       <h1>{title}</h1>
 
-      {posts.map(({ id, title, body }, index) => (
-        <PostItem
-          key={id}
-          number={index + 1}
-          title={title}
-          body={body}
-          postId={id}
-          removePost={removePost}
-        />
-      ))}
+      <TransitionGroup>
+        {posts.map(({ id, title, body }, index) => (
+          <CSSTransition key={id} timeout={500} classNames='post'>
+            <PostItem
+              number={index + 1}
+              title={title}
+              body={body}
+              postId={id}
+              removePost={removePost}
+            />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
     </>
   );
 };
