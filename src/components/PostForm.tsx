@@ -3,6 +3,8 @@ import { Post } from '../models/Post';
 import Button from './UI/button/Button';
 import Input from './UI/input/Input';
 
+import css from './PostForm.module.css';
+
 interface PostInput {
   title: string;
   body: string;
@@ -38,7 +40,7 @@ const PostForm = ({ onCreatePost }: PostFormProps) => {
     });
   };
   return (
-    <form>
+    <form className={css.form}>
       <Input
         type="text"
         name="title"
