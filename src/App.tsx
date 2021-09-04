@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import PostService from './api/PostServiceAPI';
 
 import { Button, Modal, PostFilter, PostForm, PostList } from './components';
 import { usePosts } from './hooks';
@@ -11,7 +12,7 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState<Filter>({ sort: '', query: '' });
   const [visible, setVisible] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
   const createPostHandler = (newPost: Post) => {
@@ -25,15 +26,10 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { data } = await axios.get(
-          'https://jsonplaceholder.typicode.com/posts'
-        );
-        setPosts(data);
-        setIsLoading(false);
-      } catch (error) {
-        window.alert('Something went wrong');
-      }
+      setIsLoading(true);
+      const posts = await PostService.getAll();
+      setPosts(posts);
+      setIsLoading(false);
     })();
   }, []);
 
