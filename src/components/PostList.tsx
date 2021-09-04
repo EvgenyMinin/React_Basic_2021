@@ -22,10 +22,9 @@ export const PostList = ({ posts, title, removePost }: PostListProps) => {
       <h1>{title}</h1>
 
       <TransitionGroup>
-        {posts.map(({ id, title, body }, index) => (
+        {posts.map(({ id, title, body }) => (
           <CSSTransition key={id} timeout={500} classNames='post'>
             <PostItem
-              number={index + 1}
               title={title}
               body={body}
               postId={id}

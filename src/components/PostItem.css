@@ -6,3 +6,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.postBtn {
+  margin-left: 16px;
+}
