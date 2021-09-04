@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import PostService from './api/PostServiceAPI';
 
 import { Button, Modal, PostFilter, PostForm, PostList } from './components';
-import { usePosts } from './hooks';
+import { useFetching, usePosts } from './hooks';
 import { Filter, Post } from './models';
 
 import './styles/App.css';
@@ -12,8 +11,11 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState<Filter>({ sort: '', query: '' });
   const [visible, setVisible] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const [fetchPost, isPostsLoading, postError] = useFetching(async () => {
+    const posts = await PostService.getAll();
+    setPosts(posts);
+  });
 
   const createPostHandler = (newPost: Post) => {
     setPosts([...posts, newPost]);
@@ -25,12 +27,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const posts = await PostService.getAll();
-      setPosts(posts);
-      setIsLoading(false);
-    })();
+    fetchPost();
   }, []);
 
   return (
@@ -48,8 +45,8 @@ const App = () => {
       </Modal>
 
       <PostFilter filter={filter} setFilter={setFilter} />
-
-      {isLoading ? (
+      {postError && <h2>Произошла ошибка</h2>}
+      {isPostsLoading ? (
         <h2>Загрузка данных...</h2>
       ) : (
         <PostList
