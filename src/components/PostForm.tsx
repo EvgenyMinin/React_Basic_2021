@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
+
+import { Input, Button } from './UI';
 import { Post } from '../models/Post';
-import Button from './UI/button/Button';
-import Input from './UI/input/Input';
 
 import css from './PostForm.module.css';
 
@@ -14,7 +14,7 @@ interface PostFormProps {
   onCreatePost: ({id, title, body}: Post) => void;
 }
 
-const PostForm = ({ onCreatePost }: PostFormProps) => {
+export const PostForm = ({ onCreatePost }: PostFormProps) => {
   const [postInput, setPostInput] = useState<PostInput>({
     title: '',
     body: '',
@@ -59,5 +59,3 @@ const PostForm = ({ onCreatePost }: PostFormProps) => {
     </form>
   );
 };
-
-export default PostForm;

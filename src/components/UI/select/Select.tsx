@@ -8,7 +8,7 @@ interface SelectProps {
   onChange: (value: string) => void;
 }
 
-const Select = ({ value, options, defaultValue, onChange }: SelectProps) => {
+export const Select = ({ value, options, defaultValue, onChange }: SelectProps) => {
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
   };
@@ -26,5 +26,3 @@ const Select = ({ value, options, defaultValue, onChange }: SelectProps) => {
     </select>
   );
 };
-
-export default Select;

@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { Button } from './UI';
+
 import './PostItem.css';
-import Button from './UI/button/Button';
 
 type PostItemProps = {
   number: number;
@@ -11,7 +12,7 @@ type PostItemProps = {
   removePost: (id: number) => void; 
 };
 
-const PostItem = ({ postId, number, title, body, removePost }: PostItemProps) => {
+export const PostItem = ({ postId, number, title, body, removePost }: PostItemProps) => {
   return (
     <div className="post">
       <div className="post__content">
@@ -26,5 +27,3 @@ const PostItem = ({ postId, number, title, body, removePost }: PostItemProps) =>
     </div>
   );
 };
-
-export default PostItem;
