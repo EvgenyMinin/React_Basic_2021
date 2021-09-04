@@ -11,7 +11,7 @@ interface PostInput {
 }
 
 interface PostFormProps {
-  onCreatePost: ({id, title, body}: Post) => void;
+  onCreatePost: ({ id, title, body }: Post) => void;
 }
 
 export const PostForm = ({ onCreatePost }: PostFormProps) => {
@@ -55,7 +55,9 @@ export const PostForm = ({ onCreatePost }: PostFormProps) => {
         value={postInput.body}
         onChange={changeHandler}
       />
-      <Button onClick={addNewPost}>Создать пост</Button>
+      <div className={css.buttonContainer}>
+        <Button onClick={addNewPost}>Создать пост</Button>
+      </div>
     </form>
   );
 };
