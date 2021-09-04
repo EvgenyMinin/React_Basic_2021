@@ -5,6 +5,7 @@ import PostList from './components/PostList';
 import { Post } from './models/Post';
 
 import './styles/App.css';
+import css from './App.module.css';
 
 const App = () => {
   const [posts, setPosts] = useState<Post[]>([
@@ -17,10 +18,18 @@ const App = () => {
     setPosts([...posts, newPost]);
   };
 
+  const removePost = (id: number) => {
+    setPosts(posts.filter(p => p.id !== id));
+  };
+
   return (
     <div className="app">
       <PostForm onCreatePost={createPostHandler} />
-      <PostList posts={posts} />
+      {posts.length ? (
+        <PostList posts={posts} title="Посты про JS" removePost={removePost} />
+      ) : (
+        <h2 className={css.subtitle}>Посты не найдены</h2>
+      )}
     </div>
   );
 };

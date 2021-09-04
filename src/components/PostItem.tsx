@@ -1,14 +1,17 @@
 import React from 'react';
 
 import './PostItem.css';
+import Button from './UI/button/Button';
 
 type PostItemProps = {
   number: number;
   title: string;
   body: string;
+  postId: number;
+  removePost: (id: number) => void; 
 };
 
-const PostItem = ({ number, title, body }: PostItemProps) => {
+const PostItem = ({ postId, number, title, body, removePost }: PostItemProps) => {
   return (
     <div className="post">
       <div className="post__content">
@@ -18,7 +21,7 @@ const PostItem = ({ number, title, body }: PostItemProps) => {
         <div>{body}</div>
       </div>
       <div className="post__btns">
-        <button>Удалить</button>
+        <Button onClick={() => removePost(postId)}>Удалить</Button>
       </div>
     </div>
   );
