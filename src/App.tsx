@@ -32,7 +32,7 @@ const App = () => {
         setPosts(data);
         setIsLoading(false);
       } catch (error) {
-        console.log('error', error);
+        window.alert('Something went wrong');
       }
     })();
   }, []);
