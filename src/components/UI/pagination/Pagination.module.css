@@ -1,0 +1,29 @@
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.currentPage {
+  padding: 5px 15px;
+  color: teal;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid teal;
+}
+
+.currentPage:hover,
+.pageActive:hover {
+  color: #fff;
+  background-color: teal;
+  border: 1px solid teal;
+  cursor: pointer;
+}
+
+.pageActive {
+  padding: 5px 15px;
+  color: #fff;
+  font-size: 14px;
+  background-color: teal;
+  border: 1px solid teal;
+}
