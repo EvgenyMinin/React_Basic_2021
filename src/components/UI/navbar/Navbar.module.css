@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: lightcyan;
+  height: 50px;
+  padding: 0 15px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  margin-right: 16px;
+  cursor: pointer;
+}
