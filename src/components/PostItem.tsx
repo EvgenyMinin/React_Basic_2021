@@ -1,8 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { Button } from './UI';
 
-import './PostItem.css';
+import css from './PostItem.module.css';
 
 type PostItemProps = {
   title: string;
@@ -12,16 +13,19 @@ type PostItemProps = {
 };
 
 export const PostItem = ({ postId, title, body, removePost }: PostItemProps) => {
+  const router = useHistory();
+
   return (
-    <div className="post">
+    <div className={css.post}>
       <div>
         <strong>
           {postId}. {title}
         </strong>
         <div>{body}</div>
       </div>
-      <div className="postBtn">
-        <Button onClick={() => removePost(postId)}>Удалить</Button>
+      <div className={css.postBtn}>
+        <Button onClick={() => router.push(`/posts/${postId}`)}>Открыть</Button>
+        <Button onClick={() => removePost(postId)} className={css.deleteBtn}>Удалить</Button>
       </div>
     </div>
   );

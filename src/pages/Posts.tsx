@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import {
   Button,
+  Loader,
   Modal,
   Pagination,
   PostFilter,
@@ -68,7 +69,7 @@ export const Posts = () => {
       {postError && <h2>Произошла ошибка</h2>}
 
       {isPostsLoading ? (
-        <h2>Загрузка данных...</h2>
+        <Loader />
       ) : (
         <PostList
           posts={sortedAndSearchedPosts}

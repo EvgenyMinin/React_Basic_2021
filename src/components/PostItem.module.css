@@ -1,0 +1,28 @@
+.post {
+  display: flex;
+  padding: 15px;
+  border: 2px solid teal;
+  margin-top: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.postBtn {
+  display: flex;
+  margin-left: 16px;
+}
+
+.deleteBtn {
+  border: 1px solid tomato;
+  background-color: transparent;
+  color: tomato;
+  padding: 0 15px;
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.deleteBtn:hover {
+  background-color: tomato;
+  color: white;
+  cursor: pointer;
+}
