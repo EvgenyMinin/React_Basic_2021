@@ -16,7 +16,7 @@ interface PostFilterProps {
 }
 
 export const PostFilter = ({ filter, setFilter }: PostFilterProps) => {
-  const sortPost = (sort: string) => {
+  const sortPost = (sort: string | number) => {
     setFilter({ ...filter, sort });
   };
 

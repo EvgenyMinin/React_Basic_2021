@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Post } from '../models';
 
-export const useSortedPost = (posts: Post[], sort: string) => {
+export const useSortedPost = (posts: Post[], sort: string | number) => {
   const sortedPost = useMemo(() => {
     return sort
       ? [...posts].sort((a, b) =>
@@ -16,7 +16,7 @@ export const useSortedPost = (posts: Post[], sort: string) => {
   return sortedPost;
 };
 
-export const usePosts = (posts: Post[], sort: string, query: string) => {
+export const usePosts = (posts: Post[], sort: string | number, query: string) => {
   const sortedPosts = useSortedPost(posts, sort);
 
   const sortedAndSearchedPosts = useMemo(() => {

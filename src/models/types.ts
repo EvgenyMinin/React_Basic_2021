@@ -1,9 +1,9 @@
 export type Option = {
-  value: string;
+  value: string | number;
   name: string;
 };
 
 export type Filter = {
-  sort: string;
+  sort: string | number;
   query: string;
 };

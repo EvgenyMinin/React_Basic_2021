@@ -4,8 +4,8 @@ import { Option } from '../../../models/types';
 interface SelectProps {
   options: Option[];
   defaultValue: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: string | number;
+  onChange: (value: string | number) => void;
 }
 
 export const Select = ({ value, options, defaultValue, onChange }: SelectProps) => {

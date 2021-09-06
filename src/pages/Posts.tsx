@@ -7,6 +7,7 @@ import {
   PostFilter,
   PostForm,
   PostList,
+  Select,
 } from '../components';
 
 import PostService from '../api/PostServiceAPI';
@@ -19,7 +20,7 @@ export const Posts = () => {
   const [filter, setFilter] = useState<Filter>({ sort: '', query: '' });
   const [visible, setVisible] = useState<boolean>(false);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<string | number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const lastElementRef = useRef<HTMLDivElement>(null);
@@ -50,7 +51,7 @@ export const Posts = () => {
 
   useEffect(() => {
     fetchPost(limit, currentPage);
-  }, [currentPage]);
+  }, [currentPage, limit]);
 
   return (
     <>
@@ -67,6 +68,18 @@ export const Posts = () => {
       </Modal>
 
       <PostFilter filter={filter} setFilter={setFilter} />
+
+      <Select
+        value={limit}
+        onChange={value => setLimit(value)}
+        defaultValue="Количество элементов на странице"
+        options={[
+          { value: 5, name: '5' },
+          { value: 10, name: '10' },
+          { value: 25, name: '25' },
+          { value: -1, name: 'Показать все' },
+        ]}
+      />
 
       {postError && <h2>Произошла ошибка</h2>}
 
