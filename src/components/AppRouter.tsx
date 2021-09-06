@@ -1,27 +1,22 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { About, Error, PostDetail, Posts } from '../pages';
+import { privateRoutes, publicRoutes } from '../router';
 
 export const AppRouter = () => {
-  return (
+  const isAuth = false;
+  return isAuth ? (
     <Switch>
-      <Route path="/about">
-        <About />
-      </Route>
-
-      <Route exact path="/posts">
-        <Posts />
-      </Route>
-
-      <Route path="/posts/:id">
-        <PostDetail />
-      </Route>
-
-      <Route path="/error">
-        <Error />
-      </Route>
-
-      <Redirect to="/error" />
+      {privateRoutes.map(({ path, component, exact }) => (
+        <Route path={path} component={component} exact={exact} />
+      ))}
+      <Redirect to="/posts" />
+    </Switch>
+  ) : (
+    <Switch>
+      {publicRoutes.map(({ path, component, exact }) => (
+        <Route path={path} component={component} exact={exact} />
+      ))}
+      <Redirect to="/login" />
     </Switch>
   );
 };
