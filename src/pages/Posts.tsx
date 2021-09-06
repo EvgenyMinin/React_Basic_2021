@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   Button,
   Loader,
   Modal,
-  Pagination,
   PostFilter,
   PostForm,
   PostList,
 } from '../components';
 
 import PostService from '../api/PostServiceAPI';
-import { useFetching, usePosts } from '../hooks';
+import { useFetching, useObserver, usePosts } from '../hooks';
 import { Filter, Post } from '../models';
 import { getPageCount } from '../utils';
 
@@ -22,11 +21,15 @@ export const Posts = () => {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [limit, setLimit] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const lastElementRef = useRef<HTMLDivElement>(null);
+
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+
   const [fetchPost, isPostsLoading, postError] = useFetching(
     async (limit: number, currentPage: number) => {
       const { data, headers } = await PostService.getAll(limit, currentPage);
-      setPosts(data);
+      setPosts([...posts, ...data]);
       const totalCount = headers['x-total-count'];
       setTotalPages(getPageCount(totalCount, limit));
     }
@@ -41,14 +44,13 @@ export const Posts = () => {
     setPosts(posts.filter(p => p.id !== id));
   };
 
-  const changePage = (currentPage: number) => {
-    setCurrentPage(currentPage);
-    fetchPost(limit, currentPage);
-  };
+  useObserver(lastElementRef, currentPage < totalPages, isPostsLoading, () => {
+    setCurrentPage(currentPage + 1);
+  });
 
   useEffect(() => {
     fetchPost(limit, currentPage);
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -68,21 +70,18 @@ export const Posts = () => {
 
       {postError && <h2>Произошла ошибка</h2>}
 
-      {isPostsLoading ? (
-        <Loader />
-      ) : (
-        <PostList
-          posts={sortedAndSearchedPosts}
-          title="Посты про JS"
-          removePost={removePost}
-        />
-      )}
+      {isPostsLoading && <Loader />}
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        changePage={changePage}
+      <PostList
+        posts={sortedAndSearchedPosts}
+        title="Посты про JS"
+        removePost={removePost}
       />
+
+      <div
+        ref={lastElementRef}
+        style={{ height: 20, backgroundColor: 'red' }}
+      ></div>
     </>
   );
 };
