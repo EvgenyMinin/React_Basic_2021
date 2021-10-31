@@ -12,27 +12,21 @@ interface PostListProps {
   removePost: (id: number) => void;
 }
 
-export const PostList = ({ posts, title, removePost }: PostListProps) => {
-  if (!posts.length) {
-    return <h2 className={css.subtitle}>Посты не найдены</h2>;
-  }
+export const PostList = ({ posts, title, removePost }: PostListProps) => (
+  <>
+    <h1>{title}</h1>
 
-  return (
-    <>
-      <h1>{title}</h1>
-
-      <TransitionGroup>
-        {posts.map(({ id, title, body }) => (
-          <CSSTransition key={id} timeout={500} classNames='post'>
-            <PostItem
-              title={title}
-              body={body}
-              postId={id}
-              removePost={removePost}
-            />
-          </CSSTransition>
-        ))}
-      </TransitionGroup>
-    </>
-  );
-};
+    <TransitionGroup>
+      {posts.map(({ id, title, body }) => (
+        <CSSTransition key={id} timeout={500} classNames="post">
+          <PostItem
+            title={title}
+            body={body}
+            postId={id}
+            removePost={removePost}
+          />
+        </CSSTransition>
+      ))}
+    </TransitionGroup>
+  </>
+);
