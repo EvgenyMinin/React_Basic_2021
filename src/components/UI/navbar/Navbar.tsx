@@ -21,6 +21,8 @@ export const Navbar = () => {
         </Link>
         <Link to="/posts" className={css.link}>
           Посты
+        </Link><Link to="/users" className={css.link}>
+          Пользователи
         </Link>
       </div>
       {isAuth && <Button onClick={logout}>Выйти</Button>}
