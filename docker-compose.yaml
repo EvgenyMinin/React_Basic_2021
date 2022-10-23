@@ -1,11 +1,15 @@
 version: '3.8'
 services:
   server:
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: ./docker/server
     ports:
       - '5000:5000'
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: ./docker/client
     ports:
       - '3001:3000'
     volumes:
