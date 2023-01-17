@@ -22,9 +22,10 @@ export const getStatus = createAsyncThunk(
   'status/getStatus',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get<string>('http://localhost:5000/status');
-
-      return data;
+      const { data } = await axios.get<{ status: string }>(
+        'http://127.0.0.1:54790/status'
+      );
+      return data.status;
     } catch (error) {
       const result = (error as Error).message;
       rejectWithValue(result);

@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use('/status', statusRoute);
 
-app.listen(5000, function () {
-  console.log('Example app listening on port 5000!');
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  return next();
 });
+
+app.listen(5000);

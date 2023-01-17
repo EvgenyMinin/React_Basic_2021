@@ -16,10 +16,12 @@ export const Posts = () => {
     dispatch(getStatus());
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
-      {isLoading && <Loader />}
-
       {error && <h2>{error}</h2>}
 
       <div>{status}</div>
